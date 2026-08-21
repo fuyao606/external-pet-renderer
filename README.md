@@ -1,53 +1,66 @@
-# 本地外置桌宠渲染器
+# 外置桌宠渲染器
 
-这是一个独立于 Codex 和 DeepSeek Harness 安装包的 Windows 覆盖层。它读取桌宠帧资源，并根据编码任务状态播放动画。
+一个面向 Windows 的本地桌宠覆盖层。它以透明悬浮窗口显示动画桌宠，并根据 Codex 与 DeepSeek Harness 的任务状态自动切换动作。项目内置扶摇形象，也支持导入社区宠物包或创建自己的桌宠。
 
-## 启动
+## 下载与安装
 
-安装版不需要 `npm start`。运行 `release` 目录中的安装程序后，可从桌面或开始菜单启动“外置桌宠渲染器”。
+前往 [Releases](https://github.com/fuyao606/external-pet-renderer/releases/latest)，下载最新版 `Setup.exe`。
 
-开发模式仍可使用：
+1. 双击下载的安装程序，按向导完成安装。
+2. 从桌面或开始菜单启动“外置桌宠渲染器”。
+3. 首次启动时会显示内置的扶摇桌宠；应用会常驻系统托盘。
 
-```powershell
-npm install
-npm start
-```
+安装程序适用于 64 位 Windows。安装版无需 Node.js，也不需要执行 `npm start`。
 
-默认会加载内置的扶摇桌宠资源。
+## 导入喜欢的桌宠
 
-可以用环境变量临时指定单个资源目录：
+本项目兼容 Codex 宠物的标准 `pet.json + spritesheet.webp` 包格式，也能导入包含 `pet_request.json`、`frames/frames-manifest.json` 和状态帧 PNG 的生成结果目录。
 
-```powershell
-$env:EXTERNAL_PET_PACK = 'D:\path\to\pet-pack'
-npm start
-```
+### 从 Codex Pets 下载
 
-## 导入和更换桌宠
+1. 打开 [Codex Pets 宠物库](https://codex-pet.org/zh/#gallery)，浏览、预览并下载喜欢的宠物包。
+2. 解压下载的 ZIP 文件，保留包含 `pet.json` 与 `spritesheet.webp` 的同一文件夹。
+3. 右键系统托盘中的桌宠图标，选择“桌宠形象”。
+4. 点击“导入桌宠文件夹...”，选择解压后的宠物文件夹。即使选择了它的父目录或 `frames` 子目录，应用也会尝试定位唯一有效的宠物包。
+5. 在“桌宠形象”菜单中选择新导入的形象，立即生效；选择会在下次启动时保留。
 
-右键系统托盘中的桌宠图标，打开“桌宠形象”：
-
-- 选择已导入的桌宠可立即切换形象；选择会在下次启动后保留。
-- 点击“导入桌宠文件夹...”并选择完整的生成结果目录，例如 `C:\Users\15458\Desktop\pet\fuyou-v1-run`。如果选择了它的父目录或 `frames` 子目录，导入器会在附近自动定位唯一的桌宠包。
-- 导入器识别与 `fuyou-v1-run` 相同的目录格式：根目录含 `pet_request.json`，并含 `frames\frames-manifest.json` 和状态帧 PNG 文件夹。
-
-导入时仅复制运行所需的 `frames` 和元数据到：
+导入后，应用会只复制运行所需的资源与元数据到：
 
 ```text
 C:\Users\<用户名>\.codex\external-pet-renderer\packs
 ```
 
-原始生成目录之后可以移动或删除。
+因此原始下载或生成目录可以移动、备份或删除。请仅导入你有权使用和再分发的桌宠资源，并遵守资源作者的许可证。
 
-## 自动状态
+### 用 Hatch Pet skill 创建自己的桌宠
 
-应用只读监听以下会话日志：
+可以使用 Hatch Pet skill 生成独有的 Codex 宠物。描述角色的外观与风格，完成生成后确认输出目录中包含：
 
-- `~/.codex/sessions`：`task_started` 进入工作状态；`task_complete` 进入审查状态 4 秒；`turn_aborted` / `task_failed` 进入失败状态 4 秒。
-- `~/.dsh/sessions`：DeepSeek Harness 的 `turn/start` 进入工作状态；正常 `turn/end` 进入审查状态 4 秒；`aborted`、`error` 或 `interrupted` 的 `turn/end` 进入失败状态 4 秒。默认读取标准的 `session.jsonl.zstd` 追加压缩日志，也兼容未压缩 JSONL。
+```text
+pet.json
+spritesheet.webp
+```
 
-任务气泡会汇总两个来源的运行中任务。任务面板中点击 Codex 任务会打开对应线程；点击 DeepSeek Harness 任务会优先前置已有的 Harness 浏览器窗口，找不到时才打开 Harness GUI（`http://127.0.0.1:3080`）。 “等待输入”无法从会话日志稳定推断，因此由托盘菜单或状态命令控制。右键桌宠也会打开同一菜单；单击人物会使用相同策略打开或前置 DeepSeek Harness，拖拽时播放对应形态的移动动作。拖拽会将人物中心锁定在鼠标下方，鼠标移动到哪里，桌宠就移动到哪里。只有角色的可见像素会接收鼠标操作，透明区域会自动穿透到底层应用。默认缩放为 30%。
+随后按照上面的“导入喜欢的桌宠”步骤，选择该输出文件夹即可。该格式使用 192 x 208 像素单元、8 列的精灵图；应用会读取宠物元数据并映射空闲、拖拽移动、运行、等待、审查和失败状态。也可以导入 Hatch Pet 生成的逐帧目录格式，应用会直接使用其中的 PNG 动画帧。
 
-## 手动状态命令
+## 功能
+
+- **任务状态联动**：只读监听 Codex 和 DeepSeek Harness 会话日志，在工作、等待、审查、失败和空闲状态之间自动切换动画。
+- **双来源任务面板**：任务气泡汇总 Codex 与 DeepSeek Harness 的运行中任务；点击任务可打开对应 Codex 线程，或前置已有的 Harness 浏览器窗口。
+- **自然的桌面交互**：透明像素区域自动点击穿透，只有桌宠可见像素接收鼠标事件；拖拽角色可自由摆放，左右移动时会播放对应行走动画。
+- **可控状态**：可以从托盘菜单控制自动监听，也可以用命令手动设置等待、工作、审查、失败或休息状态。
+- **多桌宠管理**：可导入多个宠物包，在托盘菜单中切换；当前选中的形象和导入记录会保存到用户目录。
+- **本地优先**：应用在本机读取会话日志和桌宠资源，不会上传你的任务内容或宠物文件。
+
+## 使用说明
+
+右键托盘图标可打开状态、缩放和形象菜单。单击桌宠会优先前置 DeepSeek Harness；若未检测到现有 Harness 浏览器窗口，才会打开 `http://127.0.0.1:3080`。
+
+默认缩放为 30%。可从托盘菜单调整桌宠尺寸，或拖拽桌宠到适合的位置。
+
+### 手动状态命令
+
+开发环境下可执行：
 
 ```powershell
 npm run status -- waiting
@@ -58,24 +71,37 @@ npm run status -- rest
 npm run status -- auto
 ```
 
-命令写入当前选中桌宠包内的 `external-renderer-state.json`。`auto` 会重新启用会话日志监听。
+命令会写入当前选中桌宠包中的 `external-renderer-state.json`。`auto` 会恢复由会话日志驱动的自动状态。
 
-## 验证
+## 支持的状态来源
+
+- `~/.codex/sessions`：`task_started` 显示工作状态；`task_complete` 显示审查状态 4 秒；`turn_aborted` 或 `task_failed` 显示失败状态 4 秒。
+- `~/.dsh/sessions`：`turn/start` 显示工作状态；正常 `turn/end` 显示审查状态 4 秒；状态为 `aborted`、`error` 或 `interrupted` 的 `turn/end` 显示失败状态 4 秒。支持 DeepSeek Harness 的 `session.jsonl.zstd` 追加压缩日志和未压缩 JSONL。
+
+“等待输入”无法从会话日志稳定推断，可通过托盘菜单或手动状态命令设置。
+
+## 开发与构建
+
+```powershell
+npm install
+npm start
+```
+
+运行检查和测试：
 
 ```powershell
 npm run check
 npm test
 ```
 
-## 构建安装包
+构建 Windows 安装程序：
 
 ```powershell
-npm install
 npm run dist
 ```
 
-构建完成后，Windows 安装程序位于 `release` 目录。安装包内置扶摇默认资源；导入的桌宠仍保存在用户目录，不会随着应用升级被覆盖。
+构建完成后，`release` 目录会生成 `外置桌宠渲染器-<版本号>-Setup.exe`。该目录是构建产物，不纳入 Git 版本控制；公开下载请使用 GitHub Releases。
 
 ## 许可证
 
-本项目代码和内置扶摇桌宠资源均以 [MIT License](LICENSE) 发布。
+代码与内置扶摇桌宠资源以 [MIT License](LICENSE) 发布。第三方导入桌宠的版权和许可由各自作者决定。
