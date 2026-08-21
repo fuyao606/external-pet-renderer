@@ -1,0 +1,120 @@
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+  font-family: "Microsoft YaHei UI", Arial, sans-serif;
+}
+
+.task-panel {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(210, 225, 232, 0.32);
+  border-radius: 8px;
+  background: rgba(20, 28, 36, 0.97);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.34);
+  color: #edf3f5;
+}
+
+.task-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 8px 0 14px;
+  border-bottom: 1px solid rgba(210, 225, 232, 0.18);
+  color: #f3f7f8;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#task-panel-close {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #b9c7cc;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1;
+}
+
+#task-panel-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.task-list {
+  max-height: calc(100% - 40px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.task-row {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  width: 100%;
+  min-height: 42px;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.task-row:hover {
+  background: rgba(92, 181, 177, 0.16);
+}
+
+.task-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3cb9a5;
+  box-shadow: 0 0 0 3px rgba(60, 185, 165, 0.14);
+}
+
+.task-copy {
+  display: grid;
+  min-width: 0;
+}
+
+.task-title {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  color: #f3f7f8;
+  font-size: 12px;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-state,
+.task-empty {
+  color: #9eafb6;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.task-empty {
+  padding: 14px 9px;
+}

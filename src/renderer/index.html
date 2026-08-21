@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>桌宠</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="pet-stage" aria-label="桌宠">
+      <div id="pet-visual">
+        <div id="pet-sprite-viewport">
+          <img id="pet-frame" alt="" draggable="false" />
+        </div>
+        <button id="task-count" type="button" hidden aria-label="查看进行中的 Codex 任务" title="查看进行中的 Codex 任务">
+          <span id="task-count-badge" class="task-count-badge" aria-hidden="true">0</span>
+        </button>
+      </div>
+    </main>
+    <script src="renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "rendererMode": "single",
+  "petId": "fuyou-v1",
+  "displayName": "扶摇",
+  "description": "A pixel-art chibi desktop pet.",
+  "cellSize": { "width": 192, "height": 208 },
+  "normal": {
+    "idle": { "frames": "frames/idle", "files": ["00.png", "01.png", "02.png", "03.png", "04.png", "05.png"], "count": 6, "loop": true },
+    "runningRight": { "frames": "frames/running-right", "files": ["00.png", "01.png", "02.png", "03.png", "04.png", "05.png", "06.png", "07.png"], "count": 8, "loop": true },
+    "runningLeft": { "frames": "frames/running-left", "files": ["00.png", "01.png", "02.png", "03.png", "04.png", "05.png", "06.png", "07.png"], "count": 8, "loop": true },
+    "mouseWave": { "frames": "frames/waving", "files": ["00.png", "01.png", "02.png", "03.png"], "count": 4, "loop": false }
+  },
+  "stateEntries": {
+    "running": { "frames": "frames/running", "files": ["00.png", "01.png", "02.png", "03.png", "04.png", "05.png"], "count": 6, "loop": true },
+    "waiting": { "frames": "frames/waiting", "files": ["00.png", "01.png", "02.png", "03.png", "04.png", "05.png"], "count": 6, "loop": true },
+    "review": { "frames": "frames/review", "files": ["00.png", "01.png", "02.png", "03.png", "04.png", "05.png"], "count": 6, "loop": true },
+    "failed": { "frames": "frames/failed", "files": ["00.png", "01.png", "02.png", "03.png", "04.png", "05.png", "06.png", "07.png"], "count": 8, "loop": false }
+  }
+}

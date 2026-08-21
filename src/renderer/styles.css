@@ -1,0 +1,107 @@
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#pet-stage {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+#pet-stage {
+  display: grid;
+  place-items: center;
+  position: relative;
+  cursor: grab;
+  user-select: none;
+}
+
+#pet-stage:active {
+  cursor: grabbing;
+}
+
+#pet-visual {
+  position: relative;
+  width: calc(var(--pet-width, 192px) * var(--pet-scale, 0.3));
+  height: calc(var(--pet-height, 208px) * var(--pet-scale, 0.3));
+}
+
+#pet-sprite-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#pet-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+#pet-frame.spritesheet-frame {
+  max-width: none;
+  max-height: none;
+  transform-origin: top left;
+}
+
+#task-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: var(--task-bubble-hit-size, 32px);
+  height: var(--task-bubble-hit-size, 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#task-count:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 1px;
+}
+
+.task-count-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: var(--task-bubble-size, 18px);
+  height: var(--task-bubble-size, 18px);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  background: #d84b39;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: calc(var(--task-bubble-size, 18px) * 0.55);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  transform: scale(1);
+  transition: background-color 120ms ease, transform 80ms ease;
+}
+
+#task-count:hover .task-count-badge {
+  background: #ee6850;
+}
+
+#task-count:active .task-count-badge {
+  transform: scale(0.9);
+}
+
+#task-count[hidden] {
+  display: none;
+}

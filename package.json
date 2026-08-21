@@ -1,0 +1,58 @@
+{
+  "name": "external-pet-renderer",
+  "version": "1.0.5",
+  "license": "MIT",
+  "description": "A local Windows desktop pet renderer for Codex and DeepSeek Harness session activity.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check src/main.js && node --check src/preload.js && node --check src/status-monitor.js && node --check src/deepseek-monitor.js && node --check src/pet-state.js && node --check src/pet-pack.js && node --check src/window-geometry.js && node --check src/codex-links.js && node --check src/browser-window.js && node --check src/renderer/renderer.js && node --check src/renderer/task-panel.js && node --check scripts/pet-status.js",
+    "test": "node --test",
+    "status": "node scripts/pet-status.js",
+    "dist": "electron-builder --win nsis --x64",
+    "pack": "electron-builder --dir --win --x64"
+  },
+  "devDependencies": {
+    "electron": "39.2.4",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.codex.externalpetrenderer",
+    "productName": "外置桌宠渲染器",
+    "artifactName": "外置桌宠渲染器-${version}-Setup.${ext}",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "scripts/**/*",
+      "package.json",
+      "!test/**/*",
+      "!ui-loop-tests/**/*",
+      "!.ui-loop/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/default-pet",
+        "to": "default-pet"
+      },
+      {
+        "from": "resources/icon.ico",
+        "to": "tray-fallback.ico"
+      }
+    ],
+    "win": {
+      "icon": "resources/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "外置桌宠渲染器"
+    }
+  }
+}
