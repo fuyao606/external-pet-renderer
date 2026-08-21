@@ -3,6 +3,15 @@
   "version": "1.0.5",
   "license": "MIT",
   "description": "A local Windows desktop pet renderer for Codex and DeepSeek Harness session activity.",
+  "author": "Tang Chuanyao",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fuyao606/external-pet-renderer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fuyao606/external-pet-renderer/issues"
+  },
+  "homepage": "https://github.com/fuyao606/external-pet-renderer#readme",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
